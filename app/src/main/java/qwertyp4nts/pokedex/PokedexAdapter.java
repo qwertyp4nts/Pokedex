@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexViewHolder> {
+public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexViewHolder> implements Filterable {
     public static class PokedexViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout containerView;
         public TextView textView;
@@ -49,10 +51,15 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
                 }
             });
         }
+        }
+    @Override
+    public Filter getFilter() {
+        return new PokemonFilter();
     }
 
     private List<Pokemon> pokemon = new ArrayList<>();
     private RequestQueue requestQueue;
+    private List<Pokemon> filtered = new ArrayList<>();
 
     PokedexAdapter(Context context) {
         requestQueue = Volley.newRequestQueue(context);
@@ -78,6 +85,9 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
                                 ));
                     }
 
+                    filtered = pokemon; //omg this fkn like took hours! this is all you needed to display
+                    //pokemon list prior to filtering
+
                     notifyDataSetChanged(); //we need to tell our app to reload, as there is new data
                 } catch (JSONException e) {
                     Log.e("cs50", "Json error", e);
@@ -93,6 +103,33 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
         requestQueue.add(request);
     }
 
+    private class PokemonFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Pokemon> filteredPokemon = new ArrayList<>();
+            for (int i = 0; i < pokemon.size(); i++) {
+                if (constraint.equals("")) {
+                    filteredPokemon.add(pokemon.get(i));
+                }
+                else if (pokemon.get(i).getName().toLowerCase().startsWith(constraint.toString().toLowerCase()))
+                    filteredPokemon.add(pokemon.get(i));
+                }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredPokemon;
+            results.count = filteredPokemon.size();
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            filtered = (List<Pokemon>) results.values;
+
+            //are the pokemon still visible? do we need to remove them or add them to screen?
+            notifyDataSetChanged();
+        }
+    }
+
     //i typred oncreate and hit enter. it generated the following
     @NonNull
     @Override
@@ -106,7 +143,7 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
     //typed onbind and hit enter for template
     @Override
     public void onBindViewHolder(@NonNull PokedexViewHolder holder, int position) {
-        Pokemon current = pokemon.get(position);
+        Pokemon current = filtered.get(position);
         holder.textView.setText(current.getName());
         holder.containerView.setTag(current);
     }
@@ -114,6 +151,7 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
 //item and enter
     @Override
     public int getItemCount() {
-        return pokemon.size();
+        return filtered.size();
     }
 }
+
