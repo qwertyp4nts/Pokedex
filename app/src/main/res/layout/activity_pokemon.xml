@@ -23,6 +23,14 @@
         android:textAlignment="center"
         android:textSize="16dp"
         android:paddingTop="5dp" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/pokemon_image"
+        android:scaleType="centerCrop"
+        android:scaleX="2.0"
+        android:scaleY="2.0"
+        android:adjustViewBounds="true"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +38,6 @@
         android:text="Details:"
         android:textAlignment="center"
         android:textSize="20dp"
-        android:paddingTop="20dp"
         android:fontFamily="casual"
         android:textColor="#b17dff"/>
     <TextView
@@ -47,13 +54,25 @@
         android:textAlignment="center"
         android:textSize="16dp"
         android:paddingTop="5dp" />
-    <ImageView
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/pokemon_image"
+        android:layout_height="wrap_content"
+        android:id="@+id/descriptionHeading"
+        android:text="Description:"
         android:textAlignment="center"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true" />
+        android:textSize="20dp"
+        android:paddingTop="10dp"
+        android:fontFamily="casual"
+        android:textColor="#b17dff"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pokemon_description"
+        android:textAlignment="center"
+        android:textSize="16dp"
+        android:paddingTop="5dp"
+        android:text="Loading . . . "
+        android:paddingBottom="10dp" />
     <Button
         android:layout_width="200dp"
         android:layout_height="wrap_content"

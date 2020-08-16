@@ -170,7 +170,8 @@ public class PokemonActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            SetPokemonImage(bitmap);
+            Bitmap scaled = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
+            SetPokemonImage(scaled);
             // load the bitmap into the ImageView!
         }
     }
