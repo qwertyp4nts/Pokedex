@@ -31,11 +31,6 @@ public class PokemonActivity extends AppCompatActivity {
     private String url;
     private RequestQueue requestQueue;
     private Button catchButton;
-   // private boolean caught = false;
-
-    private final String SHARED_PREFS = "sharedPrefs";
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +57,8 @@ public class PokemonActivity extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try {
                     nameTextView.setText(response.getString("name"));
-                    numberTextView.setText(String.format("#%03d", response.getInt("id")));
+                    String pokemonNum = String.format("#%03d", response.getInt("id"));
+                    numberTextView.setText(pokemonNum);
 
                     JSONArray typeEntries = response.getJSONArray("types");
                     for (int i = 0; i <typeEntries.length(); i++) {
@@ -77,9 +73,7 @@ public class PokemonActivity extends AppCompatActivity {
                             type2TextView.setText(type);
                         }
 
-                        Integer pokemonNum = response.getInt("id");
-                        String pokemonNumStr = String.format("#%03d", pokemonNum);
-                        loadData(pokemonNumStr);
+                        loadData(pokemonNum); //load CATCH state from SharedPreferences
 
                     }
                 } catch (JSONException e) {
@@ -93,14 +87,6 @@ public class PokemonActivity extends AppCompatActivity {
             }
         }); //get some data from url
 
-      //  loadData();
-        //Boolean c = preferences.getBoolean("caught", false);
-
-//        SharedPreferences prefs = this.getSharedPreferences(
-//                "qwertyp4nts.pokedex", Context.MODE_PRIVATE);
-        //String caughtKey = "qwertyp4nts.pokedex.caught";
-       //Boolean c = prefs.getBoolean(caughtKey, caught);
-       // getPreferences(Context.MODE_PRIVATE).getBoolean("caught", caught);
         requestQueue.add(request);
     }
 
@@ -116,23 +102,20 @@ public class PokemonActivity extends AppCompatActivity {
             catchButton.setText("Catch");
             caught = false;
         }
-        saveData(pokemon_number, caught);
-       // editor.putBoolean("caught", caught);
-       // editor.apply();
-       // prefs.edit().putBoolean(caughtKey, caught).commit();
-        //getPreferences(Context.MODE_PRIVATE).edit().putBoolean("caught", caught).apply();
+        saveData(pokemon_number, caught); //Save CATCH state to SharedPreferences
     }
 
+    //saves CATCH state of pokemon when its state changes
     public void saveData(TextView pokemonNum, boolean caught) {
         SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        //editor.putBoolean(pokemonNum.getText().toString(), caught);
         String pknum = pokemonNum.getText().toString();
         getPreferences(Context.MODE_PRIVATE).edit().putBoolean(pknum, caught).apply();
         editor.apply();
     }
 
+    //loads CATCH state of pokemon when that pokemon is clicked on
     public void loadData(String pokemonNumber) {
         SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
         boolean state = sharedPreferences.getBoolean(pokemonNumber, false);
