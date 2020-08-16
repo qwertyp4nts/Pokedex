@@ -34,6 +34,12 @@
         android:textAlignment="center"
         android:textSize="16dp"
         android:paddingTop="5dp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pokemon_image"
+        android:textAlignment="center"
+        android:paddingTop="5dp" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
