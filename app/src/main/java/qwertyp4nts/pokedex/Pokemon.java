@@ -4,10 +4,12 @@ package qwertyp4nts.pokedex;
 public class Pokemon {
     private String name;
     private String url;
+    private boolean caught;
 
-    Pokemon(String name, String url) {
+    Pokemon(String name, String url, boolean caught) {
         this.name = name;
         this.url = url;
+        this.caught = caught;
     }
 
     public String getName() {
@@ -17,4 +19,6 @@ public class Pokemon {
     public String getUrl() {
         return url;
     }
+
+    public boolean getCaughtStatus() { return caught; }
 }

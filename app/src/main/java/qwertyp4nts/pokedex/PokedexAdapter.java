@@ -77,11 +77,13 @@ public class PokedexAdapter extends RecyclerView.Adapter<PokedexAdapter.PokedexV
                     for (int i = 0; i < results.length(); i++) {
                         JSONObject result = results.getJSONObject(i);
                         String name = result.getString("name");
+                        //Boolean c = getPreferences(Context.MODE_PRIVATE).getBoolean("caught", caught);
                         pokemon.add(new Pokemon(
                                 name.substring(0, 1).toUpperCase() + name.substring(1), //this will capitalise the first
                                 //letter of the string 'name'. substring takes the start index 0 and end index 1 to
                                 //get the first letter, then call it again and only pass 1 arg to get the rest
-                                result.getString("url")
+                                result.getString("url"),
+                                false
                                 ));
                     }
 
