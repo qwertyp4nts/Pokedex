@@ -7,9 +7,15 @@
     android:padding="10dp"
     android:clickable="true"
     android:focusable="true"
+    android:gravity="center|top"
     android:foreground="?android:attr/selectableItemBackground">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/pokedex_row_text_view" />
+        android:id="@+id/pokedex_row_text_view"
+        android:fontFamily="casual"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:textColor="#6e6baa"
+        android:textAlignment="center" />
 </LinearLayout>

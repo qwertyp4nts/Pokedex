@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center|top"
     tools:context=".PokemonActivity">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/pokemon_name"
         android:textAlignment="center"
-        android:textSize="18dp"
-        android:paddingTop="10dp"/>
+        android:textSize="40dp"
+        android:fontFamily="casual"
+        android:paddingTop="20dp"
+        android:textColor="#b17dff"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,6 +23,16 @@
         android:textAlignment="center"
         android:textSize="16dp"
         android:paddingTop="5dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detailsHeading"
+        android:text="Details:"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        android:paddingTop="20dp"
+        android:fontFamily="casual"
+        android:textColor="#b17dff"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,14 +49,16 @@
         android:paddingTop="5dp" />
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:id="@+id/pokemon_image"
         android:textAlignment="center"
-        android:paddingTop="5dp" />
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true" />
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="Catch"
+        android:scaleType="fitCenter"
         android:id="@+id/catchButton"
         android:onClick="toggleCatch" />
 </LinearLayout>

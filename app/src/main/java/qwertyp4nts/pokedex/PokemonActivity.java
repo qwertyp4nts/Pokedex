@@ -40,6 +40,7 @@ public class PokemonActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private Button catchButton;
     protected ImageView pokemon_image;
+  //  private TextView detailsHeading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class PokemonActivity extends AppCompatActivity {
         type2TextView = findViewById(R.id.pokemon_type2);
         catchButton = findViewById(R.id.catchButton);
         pokemon_image = findViewById(R.id.pokemon_image);
+       // detailsHeading = findViewById(R.id.detailsHeading);
 
         load();
     }
@@ -66,7 +68,8 @@ public class PokemonActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    nameTextView.setText(response.getString("name"));
+                    String pokemonName = response.getString("name");
+                    nameTextView.setText(pokemonName.substring(0, 1).toUpperCase() + pokemonName.substring(1));
                     String pokemonNum = String.format("#%03d", response.getInt("id"));
                     numberTextView.setText(pokemonNum);
                     loadData(pokemonNum); //load CATCH state from SharedPreferences
@@ -80,7 +83,6 @@ public class PokemonActivity extends AppCompatActivity {
                     catch (JSONException e) {
                         Log.e("cs50", "Pokemon img find error");
                     }
-
 
                     JSONArray typeEntries = response.getJSONArray("types");
                     for (int i = 0; i <typeEntries.length(); i++) {
@@ -152,9 +154,8 @@ public class PokemonActivity extends AppCompatActivity {
         pokemon_image.setImageBitmap(bitmap);
     }
 
+    //Nested class. is this good practice?
     private class DownloadSpriteTask extends AsyncTask<String, Void, Bitmap> {
-        // private ImageView pokemon_image;
-
         @Override
         protected Bitmap doInBackground(String... strings) {
             try {
@@ -172,7 +173,7 @@ public class PokemonActivity extends AppCompatActivity {
             SetPokemonImage(bitmap);
             // load the bitmap into the ImageView!
         }
-
     }
+
 }
 
